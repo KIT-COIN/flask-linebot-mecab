@@ -2,3 +2,4 @@ Flask==2.0.2
 line-bot-sdk==2.0.1
 mecab-python3==1.0.4
 gunicorn
+unidic-lite==1.0.8

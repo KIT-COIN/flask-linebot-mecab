@@ -12,6 +12,8 @@ class LineFriend:
             talk_file_pass)[0]
         with open(talk_file_pass, encoding='utf-8') as f:
             self.raw_talk_text = f.read()
+
+        # トークをremarksリストにする
         self.remarks = [
             sentence.split("\t") for sentence in self.raw_talk_text.split("\n") if len(
                 sentence.split("\t")) == 3]
@@ -23,6 +25,7 @@ class LineFriend:
             sender=self.talking_with, replier=self.name,
         )
 
+    # 特定の人物の発言を抜き出してsentencesリストにする
     def remarks2ones_sentences(self, person_name):
         sentences = [remark[2]
                      for remark in self.remarks if remark[1] == person_name]
@@ -45,6 +48,7 @@ class LineFriend:
         wordlist = parsed_text.rstrip("\n").rstrip(" ").split(" ") + ['\n']
         return wordlist
 
+    # 文節に区切って，マルコフ連鎖用辞書を作る
     def make_sentence_model(self, ones_sentences):  # LineFriendが文章を作るのに使う辞書
         # 次のような辞書を作りたい{ ("今日", "は") : ["いい", "晴れ", "雨", ・・・] ,("は", "いい") :
         # ["天気","気分","天気", ・・・],("いい","天気"):["です","だ","だ",・・・], ・・・}
@@ -63,6 +67,7 @@ class LineFriend:
             queue.clear()
         return sentence_model
 
+    # 返信用の辞書を作る
     def make_reply_model(self, sender, replier):  # senderからrecieverへの返信用辞書
         # 作成するのは{'ゆく': ['ご飯'], 'な': ['微']}といったような辞書
         reply_model = {}
@@ -78,6 +83,7 @@ class LineFriend:
                     self.wakati_sentence(replier_remark[2])[0])
         return reply_model
 
+    # 文章を生成する
     def make_sentence(
             self,
             replier=None,

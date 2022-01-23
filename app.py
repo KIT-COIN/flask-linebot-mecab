@@ -25,7 +25,7 @@ app.config['CHANNEL_SECRET'] = '21a4d78b5cd16fe7b22580095a364185'
 line_bot_api = LineBotApi(app.config['CHANNEL_ACCESS_TOKEN'])
 handler = WebhookHandler(app.config['CHANNEL_SECRET'])
 
-friend = markov_bot.LineFriend("ファイル名")
+friend = markov_bot.LineFriend("[LINE] 吉田夏実とのトーク.txt")
 
 
 @app.route("/")
